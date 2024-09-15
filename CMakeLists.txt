@@ -16,7 +16,9 @@ find_package(Qt6 COMPONENTS
 
 add_executable(Meeting main.cpp
         View/StartView.cpp
-        View/StartView.h)
+        View/StartView.h
+        View/SettingView.cpp
+        View/SettingView.h)
 target_link_libraries(Meeting
         Qt::Core
         Qt::Gui

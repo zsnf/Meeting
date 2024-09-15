@@ -61,7 +61,16 @@ StartView::StartView() {
     _avatar->setGeometry(0,0, 100,100);
     _name->setGeometry(100,70,200,30);
     _setting_btn->setGeometry(0,100,300,30);
+    connect(_setting_btn, &QPushButton::clicked, this, &StartView::do_setting);
+
     _join_meeting_btn->setGeometry(0,130,300,30);
 }
 
 StartView::~StartView() = default;
+
+void StartView::do_join_meeting() {
+}
+
+void StartView::do_setting() const {
+    _setting_view->show();
+}

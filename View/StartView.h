@@ -11,13 +11,13 @@
 #include <QMouseEvent>
 #include <QFileDialog>
 #include <QString>
-#include <QLineEdit>
 #include <QInputDialog>
-#include <QDialog>
+#include <QObject>
+
+#include "SettingView.h"
 
 
 class AvatarLabel final : public QLabel{
-    Q_OBJECT
 public:
     explicit AvatarLabel(QWidget *parent = nullptr);
     void mousePressEvent(QMouseEvent *event) override;
@@ -26,7 +26,6 @@ private:
 };
 
 class NameLabel final : public QLabel {
-    Q_OBJECT
 public:
     explicit NameLabel(QWidget *parent = nullptr);
     void mousePressEvent(QMouseEvent *event) override;
@@ -45,7 +44,10 @@ private:
     NameLabel *_name{ new NameLabel{this} };
     QPushButton *_setting_btn{ new QPushButton{"设置", this} };
     QPushButton *_join_meeting_btn{ new QPushButton{ "加入会议", this} };
-
+    SettingView *_setting_view{ new SettingView };
+public slots:
+    void do_join_meeting();
+    void do_setting() const;
 };
 
 
