@@ -18,7 +18,10 @@ add_executable(Meeting main.cpp
         View/StartView.cpp
         View/StartView.h
         View/SettingView.cpp
-        View/SettingView.h)
+        View/SettingView.h
+        Data/SettingData.h
+        Controller.cpp
+        Controller.h)
 target_link_libraries(Meeting
         Qt::Core
         Qt::Gui
