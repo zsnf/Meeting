@@ -14,7 +14,9 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(Meeting main.cpp)
+add_executable(Meeting main.cpp
+        View/StartView.cpp
+        View/StartView.h)
 target_link_libraries(Meeting
         Qt::Core
         Qt::Gui
