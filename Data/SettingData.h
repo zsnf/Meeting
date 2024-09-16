@@ -57,6 +57,12 @@ public slots:
 };
 
 
+struct Setting {
+    GeneralSettingData general;
+    VideoSettingData video;
+    AudioSettingData audio;
+};
+
 
 
 

@@ -7,11 +7,15 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_PREFIX_PATH "D:/Qt/6.7.2/msvc2019_64")
+include_directories(${PROJECT_SOURCE_DIR}/sdk/high_level_api/include)
+link_directories(${PROJECT_SOURCE_DIR}/sdk/x86_64)
+set(swsdk ${PROJECT_SOURCE_DIR}/sdk/x86_64/agora_rtc_sdk.dll.lib)
 
 find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
+        Multimedia
         REQUIRED)
 
 add_executable(Meeting main.cpp
@@ -21,12 +25,16 @@ add_executable(Meeting main.cpp
         View/SettingView.h
         Data/SettingData.h
         Controller.cpp
-        Controller.h)
+        Controller.h
+        Data/SDKcall.cpp
+        Data/SDKcall.h)
 target_link_libraries(Meeting
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        Qt6::Multimedia
 )
+target_link_libraries(Meeting ${swsdk})
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
