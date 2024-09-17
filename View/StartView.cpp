@@ -74,3 +74,21 @@ void StartView::do_join_meeting() {
 void StartView::do_setting() const {
     _setting_view->show();
 }
+
+StartView2::StartView2() {
+    this->resize(800,600);
+    auto *layout = new QHBoxLayout;
+    layout->addWidget(_room_id);
+    layout->addWidget(_join_meeting_btn);
+
+    auto hlayout2 = new QHBoxLayout;
+    hlayout2->addWidget(_self_widget);
+    hlayout2->addWidget(_other_widget);
+
+    auto vlayout = new QVBoxLayout{this};
+    vlayout->addLayout(layout);
+    vlayout->addLayout(hlayout2);
+
+}
+
+StartView2::~StartView2() = default;

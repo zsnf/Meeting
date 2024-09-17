@@ -51,5 +51,22 @@ public slots:
 };
 
 
+class StartView2 final : public QWidget{
+public:
+    StartView2();
+    ~StartView2() override;
+
+
+    QLineEdit* _room_id { new QLineEdit{this} };
+    QPushButton* _join_meeting_btn{ new QPushButton{ "加入会议", this} };
+    QWidget* _self_widget{ new QWidget{this} };
+    QWidget* _other_widget{ new QWidget{this} };
+
+public slots:
+    void on_local_join_success(const QString& channel, uint uid, int elapsed);
+    void on_remote_join_success(uint uid, int elapsed);
+
+};
+
 
 #endif //STARTVIEW_H

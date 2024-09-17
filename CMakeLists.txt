@@ -7,9 +7,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_PREFIX_PATH "D:/Qt/6.7.2/msvc2019_64")
-include_directories(${PROJECT_SOURCE_DIR}/sdk/high_level_api/include)
-link_directories(${PROJECT_SOURCE_DIR}/sdk/x86_64)
-set(swsdk ${PROJECT_SOURCE_DIR}/sdk/x86_64/agora_rtc_sdk.dll.lib)
+
+set(SOLUTION_DIR "${CMAKE_CURRENT_SOURCE_DIR}/")
+# 指定SDK的头文件目录
+include_directories(${SOLUTION_DIR}/sdk/high_level_api/include)
+
+# 指定SDK的库文件目录
+link_directories(${SOLUTION_DIR}/sdk/x86_64)
+
+# 设置库文件路径
+set(shengwang ${SOLUTION_DIR}/sdk/x86_64/agora_rtc_sdk.dll.lib)
 
 find_package(Qt6 COMPONENTS
         Core
@@ -27,14 +34,26 @@ add_executable(Meeting main.cpp
         Controller.cpp
         Controller.h
         Data/SDKcall.cpp
-        Data/SDKcall.h)
+        Data/SDKcall.h
+)
 target_link_libraries(Meeting
         Qt::Core
         Qt::Gui
         Qt::Widgets
         Qt6::Multimedia
+        ${shengwang}
 )
-target_link_libraries(Meeting ${swsdk})
+
+file(GLOB AGORA_DLLS "${SOLUTION_DIR}/sdk/x86_64/*.dll")
+foreach(DLL ${AGORA_DLLS})
+    add_custom_command(
+            TARGET Meeting POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${DLL}  # 逐个 DLL 文件复制
+            ${CMAKE_CURRENT_BINARY_DIR}  # 复制到构建目录
+    )
+endforeach()
+
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
@@ -64,3 +83,8 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
 endif ()
+
+
+
+message(STATUS "Agora SDK Library Path: ${agora_rtc_sdk_lib}")
+message(STATUS "Solution Directory: ${SOLUTION_DIR}")

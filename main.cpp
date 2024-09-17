@@ -2,11 +2,13 @@
 #include <QPushButton>
 
 #include "Controller.h"
+#include "View/StartView.h"
+#include <QWidget>
 
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
-    Controller controller{};
+    const Controller controller;
     controller.ViewShow();
     return QApplication::exec();
 }
