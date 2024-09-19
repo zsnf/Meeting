@@ -18,11 +18,13 @@ link_directories(${SOLUTION_DIR}/sdk/x86_64)
 # 设置库文件路径
 set(shengwang ${SOLUTION_DIR}/sdk/x86_64/agora_rtc_sdk.dll.lib)
 
+find_package(ZLIB REQUIRED)
+find_package(OpenSSL REQUIRED)
 find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
-        Multimedia
+        WebSockets
         REQUIRED)
 
 add_executable(Meeting main.cpp
@@ -35,15 +37,31 @@ add_executable(Meeting main.cpp
         Controller.h
         Data/SDKcall.cpp
         Data/SDKcall.h
+        Data/Client.cpp
+        Data/Client.h
 )
+add_executable(TokenServer TokenServer/servermain.cpp
+        TokenServer/Server.cpp
+        TokenServer/Server.h
+        TokenServer/TokenSDK/utils.h
+        TokenServer/TokenSDK/AccessToken2.h
+        TokenServer/TokenSDK/RtcTokenBuilder2.h)
+
 target_link_libraries(Meeting
         Qt::Core
         Qt::Gui
         Qt::Widgets
-        Qt6::Multimedia
+        Qt::WebSockets
         ${shengwang}
 )
 
+target_link_libraries(TokenServer
+        Qt::Core
+        Qt::WebSockets
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ZLIB::ZLIB
+)
 file(GLOB AGORA_DLLS "${SOLUTION_DIR}/sdk/x86_64/*.dll")
 foreach(DLL ${AGORA_DLLS})
     add_custom_command(

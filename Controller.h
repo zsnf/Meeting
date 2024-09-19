@@ -6,6 +6,8 @@
 #define CONTROLLER_H
 
 #include <memory>
+
+#include "Data/Client.h"
 #include "View/StartView.h"
 
 class Controller final : public QObject{
@@ -13,8 +15,12 @@ class Controller final : public QObject{
 public:
     Controller();
     void ViewShow() const;
+
 private:
     std::shared_ptr<StartView2> _start_view{};
+    std::shared_ptr<StartView3> _start_view3{};
+    std::shared_ptr<Client> _client{};
+    void JoinByToken(const QString& token);
 };
 
 

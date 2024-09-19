@@ -9,6 +9,12 @@
 #include <IAgoraRtcEngine.h>
 #include <QObject>
 #include <QMessageBox>
+#include <QString>
+
+
+
+
+
 class SDKcall final : public QObject, public agora::rtc::IRtcEngineEventHandler{
     Q_OBJECT
 public:
@@ -34,6 +40,9 @@ public:
     int joinChannel(const QString& key, const QString& channel, uint uid) const;
     BOOL LocalVideoPreview(HWND hVideoWnd, BOOL bPreviewOn, agora::media::base::RENDER_MODE_TYPE renderType = agora::media::base::RENDER_MODE_TYPE::RENDER_MODE_FIT);
     BOOL RemoteVideoRender(agora::rtc::uid_t uid, HWND hVideoWnd, agora::media::base::RENDER_MODE_TYPE renderType/* = RENDER_MODE_TYPE::RENDER_MODE_HIDDEN*/);
+    QString RoomID{};
+    QString token {};
+    uint uid{};
 private:
     SDKcall();
     ~SDKcall() override;
@@ -44,6 +53,7 @@ private:
     void on_user_joined(uint uid, int elapsed);
     void on_user_offline(uint uid, int reason);
     void on_leave_channel();
+
 };
 
 

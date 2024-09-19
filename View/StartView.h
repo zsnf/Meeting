@@ -13,43 +13,9 @@
 #include <QString>
 #include <QInputDialog>
 #include <QObject>
+#include <QDialog>
 
 #include "SettingView.h"
-
-
-class AvatarLabel final : public QLabel{
-public:
-    explicit AvatarLabel(QWidget *parent = nullptr);
-    void mousePressEvent(QMouseEvent *event) override;
-private:
-    void setAvatar();
-};
-
-class NameLabel final : public QLabel {
-public:
-    explicit NameLabel(QWidget *parent = nullptr);
-    void mousePressEvent(QMouseEvent *event) override;
-private:
-    void setName();
-};
-
-class StartView final : public QWidget{
-public:
-    StartView();
-    ~StartView() override;
-    StartView(const StartView&) = delete;
-
-private:
-    AvatarLabel *_avatar{ new AvatarLabel{this} };
-    NameLabel *_name{ new NameLabel{this} };
-    QPushButton *_setting_btn{ new QPushButton{"设置", this} };
-    QPushButton *_join_meeting_btn{ new QPushButton{ "加入会议", this} };
-    SettingView *_setting_view{ new SettingView };
-public slots:
-    void do_join_meeting();
-    void do_setting() const;
-};
-
 
 class StartView2 final : public QWidget{
 public:
@@ -62,11 +28,27 @@ public:
     QWidget* _self_widget{ new QWidget{this} };
     QWidget* _other_widget{ new QWidget{this} };
 
-public slots:
-    void on_local_join_success(const QString& channel, uint uid, int elapsed);
-    void on_remote_join_success(uint uid, int elapsed);
-
 };
+
+class StartView3 final : public QWidget {
+    Q_OBJECT
+public:
+    StartView3();
+    ~StartView3() override;
+
+private:
+    QPushButton* _create_meeting_btn{ new QPushButton{ "创建会议", this} };
+    QPushButton* _join_meeting_btn{ new QPushButton{ "加入会议", this} };
+    QPushButton* _setting_btn{ new QPushButton{"设置", this} };
+    QVBoxLayout* _main_layout{ new QVBoxLayout{this} };
+
+private slots:
+    void show_create_meeting_dialog();
+
+    signals:
+    void create_meeting_signal(const QString& RoomID);
+};
+
 
 
 #endif //STARTVIEW_H
